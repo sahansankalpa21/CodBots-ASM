@@ -1,0 +1,18 @@
+{
+    "step_id":1,
+    "step_display_id":"TI",
+    "section":"Tail",
+    "title":"Tail INTRO",
+    "video_real_link":"-",
+    "video_timestamp_real":"1.00,0.50,1.10",
+    "video_ani_link":"-",
+    "video_timestamp_ani":"-",
+    "audio_en_link":"-",
+    "audio_en_timestamp":"-",
+    "audio_si_link":"-",
+    "audio_si_timestamp":"-",
+    "audio_tm_link":"-",
+    "audio_tm_timestamp":"-",
+    "summary":["WATCHDOG රොබෝගේ වලිගය කොටසයි. මෙම කොටස මෙතැනින් පසු 'Watchdog Tail' යනුවෙන් හදුන්වමු. එය ඕනෑම වර්ණයක් නිකුත් කල හැකි LED lights 6කින් සමන්විත වේ. අලංකාරයට වර්ණ රටා මෙන්ම , රොබෝ ගේ දත්ත හා අවස්ථා නිරූපණය වන Display එකක් ලෙසද භාවිතා කල හැක. ","විවිද වර්ණ රටා ඉතා පහසුවෙන් නිර්මාණය කරගන්නා කරමවේද පාඨමාලාවේ CODING ඉගෙනගැනීමේ කොටස් වලට එකතු කර ඇත. එමගින් ඔබේ නිර්මාණෂීලීත්වය අනුව ඕනෑම රටාවක් නිර්මාණය කරගත හැක. ","එසේම බැටරි මට්ටම දැක්වීම, WiFi Signal Strength එක දැක්වීම, රොබෝගේ විවිද අවස්තාවන්ට අනුරූප රටා දැක්වීම, උදාහරණ වශයෙන් Warnings ලයිට් ලෙස දැක්වීම, වගේම ඉදිරියේ ඇති බාදකයට ඇති දුර දැක්වීම වැනි ක්‍රියාකාරකම් සදහාද මෙය භාවිතා කල හැකිය."],
+    "parts_for_step":[{"part_id":"AT01","part_link":"-"},{"part_id":"AT02","part_link":"-"}]
+}

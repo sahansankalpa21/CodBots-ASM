@@ -1,86 +1,76 @@
-import React from 'react'
-import Accordion from './Accordion';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Timeline = () => {
+const Timeline = ({ allSections , getSectionDetails}) => {
+    const [accordions, setAccordions] = useState([]);
+    const [filledSections, setFilledSections] = useState([])
 
-    const [sectionDetails, setSectionDetails] = useState({})
+    useEffect(() => {
+        const transformedSections = Object.entries(allSections).map(([section, data], index) => ({
+            key: index,
+            title: section,
+            isOpen: false,
+            data,
+        }));
 
-    const [accordions, setAccordion] = useState([
-        {
-            key: 1,
-            title: 'Tail ASM',
-            data: ['Step - 01', 'Step - 02', 'Step - 03', 'Step - 01', 'Step - 02', 'Step - 03', 'Step - 01', 'Step - 02', 'Step - 03', 'Step - 03', 'Step - 01', 'Step - 02', 'Step - 03'],
-            isOpen: false
-        },
-        {
-            key: 2,
-            title: 'Logo ASM',
-            data: ['Step - 01', 'Step - 02', 'Step - 03'],
-            isOpen: false
-        },
-    ]);
+        if (accordions.length === 0) {
+            setAccordions(transformedSections);
+        }
 
-    const getAllSections = () => {
+        setFilledSections([]);
+    }, [allSections]);
 
-    }
 
-    const getSectionDetails = (section) => {
+    const toggleAccordion = (accordion) => {
+        
+        if (filledSections.indexOf(accordion.title) === -1) {
+            getSectionDetails(accordion.title)
+            setFilledSections([...filledSections, accordion.title]);
+        }
 
-    }
-
-    const toggleAccordion = (accordionkey) => {
-        const updatedAccordions = accordions.map((accord) => {
-            if (accord.key === accordionkey) {
-                return { ...accord, isOpen: !accord.isOpen };
-            } else {
-                return { ...accord, isOpen: false };
-            }
-        });
-
-        setAccordion(updatedAccordions);
+        setAccordions((prevAccordions) =>
+            prevAccordions.map((accord) => ({
+                ...accord,
+                isOpen: accord.key === accordion.key ? !accord.isOpen : false,
+            }))
+        );
     };
+
+    const handleClickOnStep = (step_id) => {
+        console.log(step_id)
+    }
+
 
     return (
         <div>
-
-
             <div className="p-2">
-
                 {accordions.map((accordion) => (
-
-                    <div className="border rounded-md mb-1">
-                        
+                    <div key={accordion.key} className="border rounded-md mb-1">
                         <button
                             className="w-full px-4 py-2 text-left bg-[#e9e9e9] hover:bg-gray-300 transition duration-300"
-                            onClick={() => toggleAccordion(accordion.key)}
+                            onClick={() => toggleAccordion(accordion)}
                         >
-
                             {accordion.title}
-
                             <span className={`float-right transform ${accordion.isOpen ? 'rotate-180' : 'rotate-0'}  transition-transform duration-300`}>
                                 &#9660;
                             </span>
-
                         </button>
 
-
                         {accordion.isOpen && (
-
                             <div className="ml-2">
-                                {accordion.data.map((step, index) => (
-                                    <div key={index} className="bg-gray-100 my-1 px-2 cursor-pointer">
-                                        {step}
+                                {accordion.data.map((step) => (
+                                    <div key={step.id} className="bg-gray-100 my-1 px-2 cursor-pointer" >
+                                        <button onClick={() => handleClickOnStep(step.id)}>
+                                            {step.title}
+                                        </button>
                                     </div>
                                 ))}
                             </div>
-
                         )}
                     </div>
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Timeline
+export default Timeline;

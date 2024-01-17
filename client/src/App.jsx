@@ -17,12 +17,46 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
 
-  const [sectionDetails, setSectionDetails] = useState({})
   const [allSections, setAllSections] = useState({})
+  const [sectionDetails, setSectionDetails] = useState({})
   const [selectedSection, setSelectedSection] = useState()
 
-  const getAllSections = () => {
+  const getAllSections = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/main/sections`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
+      const data = await response.json();
+
+      setAllSections(data)
+    } catch (error) {
+      console.error("Error getting sections:", error);
+    }
+  }
+
+  const getSectionDetails = async (section) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/main/section-details?section=${section}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      const data = await response.json();
+      setSectionDetails((prevSectionDetails) => {
+        const newArray = Array.isArray(prevSectionDetails) ? prevSectionDetails : [];
+        return [...newArray, ...data.mainDetails];
+      });
+    } catch (error) {
+      console.error("Error getting all details:", error);
+    }
   }
 
   const menuNavigationClick = (menuItem) => {
@@ -111,6 +145,15 @@ export default function App() {
     };
   }, [window.innerWidth]);
 
+  useEffect(() => {
+    getAllSections()
+    getSectionDetails('Tail')
+  }, [])
+
+  useEffect(() => {
+    console.log(sectionDetails)
+  }, [sectionDetails])
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 ">
@@ -153,7 +196,7 @@ export default function App() {
 
         <div className="hidden md:flex md:flex-col p-3" >
           <div className="overflow-y-auto  h-[300px] mb-4" >
-            <Timeline />
+            <Timeline allSections={allSections} getSectionDetails={getSectionDetails} />
           </div>
 
           <div className="flex flex-col gap-1 mt-auto mb-2">
@@ -201,7 +244,7 @@ export default function App() {
         </div>
 
         <div>
-          {selectedMenuItem === 'Playlist' ? <Timeline /> : null}
+          {selectedMenuItem === 'Playlist' ? <Timeline allSections={allSections} getSectionDetails={getSectionDetails} /> : null}
           {selectedMenuItem === 'Summary' ? <Summary /> : null}
           {selectedMenuItem === 'Gallery' ? <Gallery /> : null}
           {selectedMenuItem === 'Q&A' ? <QA /> : null}
